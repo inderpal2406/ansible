@@ -1,0 +1,26 @@
+---
+- hosts: all
+  tasks:
+    - name: Ping all servers
+      ping:
+    - name: who is the user
+      cmd: whoami
+    - name: what is present working dir
+      cmd: pwd
+
+
+---
+- hosts: all
+  tasks:
+    - name: update APT repos
+      apt:
+        upgrade: yes
+        update_cache: yes
+    - name: install APACHE2
+      apt:
+        name: APACHE2
+        state: present
+    - name: check APACHE2 service
+      service:
+        name: APACHE2
+        state: started
