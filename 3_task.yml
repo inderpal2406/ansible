@@ -1,0 +1,9 @@
+---
+  - hosts: all
+    tasks:
+      - name: get hostname
+        command: hostname
+      - name: get machine architecture
+        command: uname -m
+      - name: get date
+        command: date
