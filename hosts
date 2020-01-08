@@ -10,3 +10,10 @@ lb01 ansible_host=ansible_loadbalancer ansible_user=ansible ansible_private_key_
 
 [database]
 db01 ansible_host=ansible_database ansible_user=ansible ansible_private_key_file=/home/ansible/.ssh/ansible_key
+
+[webserver]
+web01 ansible_host=ansible_webserver01 ansible_user=ansible ansible_private_key_file=/home/ansible/.ssh/ansible_key
+web02 ansible_host=ansible_webserver02 ansible_user=ansible ansible_private_key_file=/home/ansible/.ssh/ansible_key
+
+[controllers]
+control ansible_host=ansible_master ansible_connection=local

@@ -7,3 +7,8 @@
           name: httpd
           state: present
           update_cache: yes 
+      - name: check apache2 (httpd) service 
+        service: 
+          name: httpd
+          state: started
+          enabled: yes

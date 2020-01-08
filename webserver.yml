@@ -1,0 +1,13 @@
+---
+  - hosts: webserver
+    become: true
+    tasks:
+      - name: install webserver components
+        yum:
+          name: "{{item}}"
+          state: present
+          update_cache: yes
+        with_items:
+          - httpd
+          - python-virtualenv
+          - mod_wsgi
