@@ -1,0 +1,17 @@
+---
+  - hosts: all
+    tasks:
+      - name: Get Server Hostname Of All Hosts
+        command: hostname
+  - hosts: webserver
+    tasks:
+      - name: Get Uptime Of All Webserver Hosts
+        command: uptime
+  - hosts: database
+    tasks:
+      - name: Get Network Interfaces of Database Host
+        command: ifconfig
+  - hosts: loadbalancer
+    tasks:
+      - name: Get Uname Command Statistics of Loadbalancer Host
+        command: uname -a

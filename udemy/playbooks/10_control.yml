@@ -1,0 +1,31 @@
+---
+  - hosts: control
+    become: true
+    tasks:
+      - name: change hostname of ansible controller permanently
+        lineinfile: dest=/etc/hostname regexp=ip-172-31-45-130 line="ansible-controller"
+        notify: reboot server
+
+      - name: update /etc/hosts file on ansible-controller
+        blockinfile:
+          path: /etc/hosts
+          backup: yes
+          block: |
+            172.31.45.130       ansible-controller
+            172.31.35.243       lb01
+            172.31.47.68        app01
+            172.31.37.198       app02
+            172.31.32.28        db01
+
+      
+      - name: install tools
+        apt: name={{item}} state=present update_cache=yes
+        with_items:
+          - curl
+          - whois
+          - python-httplib2
+
+    handlers:
+      - name: reboot server
+        reboot:
+

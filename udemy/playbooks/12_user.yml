@@ -1,0 +1,28 @@
+---
+  - hosts: all
+    become: true
+    tasks:
+      - name: create users
+        user:
+          name: "{{item.name}}"
+          state: present
+          append: yes
+          groups: sudo
+          shell: /bin/bash
+          comment: "{{item.comment}}"
+          password: "{{item.password}}"
+          update_password: on_create
+          expires: -1
+        with_items:
+          - { name: 'user1', comment: 'Test User 1', password: '$6$Qnh0G3nj$4poq3KQ8iEGE8FCDGbEWYk0kRHw.s9OFk.rad/iq2XQifGVvwyiP6Iuvbv0/bK.rozvDwws8SG9lZjfGgI.mK.' }
+          - { name: 'user2', comment: 'Test User 2', password: '$6$lj8guOzSxwzM$1CkOvTUXR9mp/E1lej/MFGdWOFRgLFikE6957GCPWX7sxAriFeksepOndD8x5Gu3povboZw2EY4e96LpZaNeH0' }
+      
+      - name: delete users
+        user:
+          name: "{{item}}"
+          state: absent
+          force: yes
+          remove: yes
+        with_items:
+          - user1
+          - user2

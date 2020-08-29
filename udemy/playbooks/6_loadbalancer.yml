@@ -1,0 +1,48 @@
+---
+  - hosts: loadbalancer
+    become: true
+    tasks:
+      - name: change hostname permanently
+        lineinfile: dest=/etc/hostname regexp=ip-172-31-35-243 line="lb01"
+        notify: reboot server
+
+      - name: update /etc/hosts file on lb01
+        blockinfile:
+          path: /etc/hosts
+          backup: yes
+          block: |
+            172.31.45.130       ansible-controller
+            172.31.35.243       lb01
+            172.31.47.68        app01
+            172.31.37.198       app02
+            172.31.32.28        db01
+
+      - name: install tools
+        apt: name={{ item }} state=present update_cache=yes
+        with_items:
+          - python-httplib2
+      
+      - name: install nginx
+        apt: name=nginx state=present update_cache=yes # since we use ubuntu, we use apt pkg manager
+
+      - name: ensure nginx started
+        service: name=nginx state=started enabled=yes
+
+      - name: configure nginx site
+        template: src=../templates/nginx.conf.j2 dest=/etc/nginx/sites-available/demo mode=0644
+        notify: restart nginx
+
+      - name: de-activate nginx default site
+        file: path=/etc/nginx/sites-enabled/default state=absent
+        notify: restart nginx
+
+      - name: activate demo site in nginx
+        file: src=/etc/nginx/sites-available/demo dest=/etc/nginx/sites-enabled/demo state=link
+        notify: restart nginx
+
+    handlers:
+      - name: reboot server
+        reboot:
+
+      - name: restart nginx
+        service: name=nginx state=restarted

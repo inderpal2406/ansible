@@ -1,0 +1,33 @@
+---
+  - hosts: all
+    become: true
+    tasks:
+
+      # Task to add users
+      - name: create users
+        user:
+          name: "{{ item.name }}"
+          state: present
+          append: yes
+          groups: sudo
+          shell: /bin/bash
+          comment: "{{ item.comment }}"
+          password: "{{ item.password }}"
+          update_password: always
+          expires: -1
+        with_items:
+          - { name: 'a55432', comment: 'Inderpal Singh (CapDevOps)', password: '$6$p8cw9L94tEiqIpp$75JOB7sNMLwPN6/UkVOJCvtdz2oBMHqwBM.Qeqowc4fBNVMA6d2UuH9keCdXNentpO0lzByxqwG2C/4Re8Ijl/' }
+          - { name: 'a55585', comment: 'Pavan Pardeshi (CapDevOps)', password: '$6$HyN.xvVPkMtmh0v$BIFjaqXM9lH4rXWEwXyWM7/2vBi5/SKOcPYvNfLTOFQqV6O.oVt3W72lzMxwnYoP/3TbLNEmZiR9oBoxJDn6i1' }
+          - { name: 'a55545', comment: 'Vignesh Moorthy (CapDevOps)', password: '$6$BChqr8/p$zX20sikYkJCaC0wEkYRH4RHP49yDNpkcZoxUITjNukenRvfixohdmKBv.oxWwhUxYNFA0rSPr7hVbKCTx9MSx1' }
+          - { name: 'a55517', comment: 'Aschwin Aggarwal (CapDevOps)', password: '$6$mE4Vrp0o6O6oUt$MsyM0lcHAet5mFi9isg68JBUAoq8nzzpsYKVwsP4JzB7EfIju0ZjG283EPexppPMzH6qX2AjWQd8XCAfSPcW7.' }
+
+      # Task to delete users
+      - name: delete users
+        user:
+          name: "{{ item }}"
+          state: absent
+          force: yes
+          remove: yes
+        with_items:
+          - f12345
+          - f98765

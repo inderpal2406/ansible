@@ -1,0 +1,62 @@
+---
+- hosts: loadbalancer
+  become: true
+  tasks:
+    - name: verify nginx service
+      command: systemctl status nginx
+
+    - name: verify nginx is listening on port 80
+      wait_for: port=80 timeout=1
+
+- hosts: webserver
+  become: true
+  tasks:
+    - name: verify apache2 service
+      command: systemctl status apache2
+
+    - name: verify apache2 listening on port 80
+      wait_for: port=80 timeout=1
+
+- hosts: database
+  become: true
+  tasks:
+    - name: verify mysql service
+      command: systemctl status mysql
+
+    - name: verify mysql listening on port 3306
+      wait_for: port=3306 timeout=1
+
+# verify end-to-end response
+- hosts: control
+  tasks:
+    - name: query end-to-end response
+      uri: url=http://{{item}} return_content=yes # in addition to checking if we get http return code as 200, we check if python app content is returned
+      with_items:
+        - groups.loadbalancer   # we specify groups.loadbalancer because in future if we setup multiple LBs, it'll check all of them
+      register: lb_index        # stores response in lb_index variable using the register key or module
+
+    # check the returned content if it's correct or not
+    - name: verify end-to-end reponse
+      fail: msg="index failed to return content"
+      when: "'Hello, from sunny' not in item.content"
+      with_items:
+        - "{{lb_index.results}}" 
+          # we use  with_items as response from each LB is stored in lb_index array and we loop through each value in array to check response
+
+# verify individual app server response
+- hosts: loadbalancer
+  tasks:
+    - name: query individual app server response
+      uri: url=http://{{item}} return_content=yes
+      with_items:
+        - groups.webserver
+      register: app_index
+
+    - name: verify individual app server response
+      fail: msg="index failed to return content"
+      when: "'Hello, from sunny {{item.item}}' not in content"
+      with_items:
+        - "{{app_index.results}}"
+
+
+

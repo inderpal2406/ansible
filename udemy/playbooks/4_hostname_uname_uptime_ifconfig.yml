@@ -1,0 +1,9 @@
+---
+  - hosts: all
+    tasks:
+      # Each command will form a separate list value as we need to use command module 4 times to execute 4 commands.
+      # It's better to have different names for each task to have some information about the task.
+      - command: hostname
+      - command: uname -a
+      - command: uptime
+      - command: ifconfig

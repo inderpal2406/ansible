@@ -1,0 +1,78 @@
+---
+  - hosts: webserver[0]
+    become: true
+    tasks:
+      - name: change hostname of first webserver permanently
+        lineinfile: dest=/etc/hostname regexp=web01 line=app01
+        notify: reboot server
+
+    handlers:
+      - name: reboot server
+        reboot:
+
+  - hosts: webserver[1]
+    become: true
+    tasks:
+      - name: change hostname of second webserver permanently
+        lineinfile: dest=/etc/hostname regexp=web02 line=app02
+        notify: reboot server
+
+    handlers:
+      - name: reboot server
+        reboot:
+
+  - hosts: webserver
+    become: true
+    tasks:
+      - name: update /etc/hosts on app01 and app02
+        blockinfile:
+          path: /etc/hosts
+          backup: yes
+          block: |
+            172.31.45.130       ansible-controller
+            172.31.35.243       lb01
+            172.31.47.68        app01
+            172.31.37.198       app02
+            172.31.32.28        db01
+
+      - name: install web components
+        apt: name={{item}} state=present update_cache=yes
+        with_items:
+          - apache2
+          - libapache2-mod-wsgi
+          - python-pip
+          - python-virtualenv
+          - python-mysqldb
+
+      - name: ensure apache2 started
+        service: name=apache2 state=started enabled=yes
+
+      - name: ensure mod_wsgi enabled
+        apache2_module: state=present name=wsgi
+        notify: restart apache2
+
+      - name: copy demo app source
+        copy: src=../demo/app/ dest=/var/www/demo/ mode=0755
+        notify: restart apache2
+
+      - name: copy apache virtual host config
+        copy: src=../demo/demo.conf dest=/etc/apache2/sites-available/ mode=0755
+        # as we change apache configiration, we need to restart apache2
+        notify: restart apache2
+
+      - name: setup python virtualenv
+        pip: requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv
+        notify: restart apache2
+
+      - name: de-activate apache default website
+        file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+        notify: restart apache2
+
+      - name: activate python website
+        file: src=/etc/apache2/sites-available/demo.conf dest=/etc/apache2/sites-enabled/demo.conf state=link
+        notify: restart apache2
+
+    handlers:
+      - name: restart apache2
+        service: name=apache2 state=restarted
+

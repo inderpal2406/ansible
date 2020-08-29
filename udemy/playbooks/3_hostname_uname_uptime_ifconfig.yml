@@ -1,0 +1,14 @@
+---
+  - hosts: all
+    tasks:
+      - name: Get Server Hostname
+        command: hostname
+
+      - name: Get Uname Command Statistics
+        command: uname -a
+
+      - name: Get Server Uptime
+        command: uptime
+
+      - name: Get Network Interface Details
+        command: ifconfig

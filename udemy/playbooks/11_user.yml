@@ -1,0 +1,19 @@
+---
+  - hosts: all
+    become: true
+    tasks:
+      - name: create users
+        user:
+          name: "{{item}}"
+          state: present
+          append: yes
+          groups: sudo
+          shell: /bin/bash
+          comment: Test User 1
+          force: no
+          remove: no
+          password: '$6$AH4xy9KowBZ.0I$bGaKviHVFXKENFAul641SXKelAt1Lq2tFc7.29hT7rnaYvTANns4tcfnW9MJ1m969vhiFbZrKWgj.phVat/ak.'
+          update_password: on_create
+          expires: -1
+        with_items:
+          - user1
