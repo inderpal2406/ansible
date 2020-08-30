@@ -17,6 +17,14 @@
             172.31.37.198       app02
             172.31.32.28        db01
 
+      - name: update /etc/ssh/sshd_config to increase session timeout
+        lineinfile: dest=/etc/ssh/sshd_config regexp=^#ClientAliveInterval line="ClientAliveInterval 5m"
+        notify: restart sshd
+
+      - name: update /etc/ssh/sshd_config to increase session timeout
+        lineinfile: dest=/etc/ssh/sshd_config regexp=^#ClientAliveCountMax line="ClientAliveCountMax 4"
+        notify: restart sshd
+
       - name: install tools
         apt: name={{ item }} state=present update_cache=yes
         with_items:
@@ -42,6 +50,9 @@
     handlers:
       - name: reboot server
         reboot:
+
+      - name: restart sshd
+        service: name=sshd state=restarted
 
       - name: restart mysql
         service: name=mysql state=restarted
