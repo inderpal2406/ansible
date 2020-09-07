@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: install utilities on all servers
+      apt: name=wget,vim state=present update_cache=yes

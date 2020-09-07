@@ -1,0 +1,17 @@
+#!/usr/bin/ansible-playbook
+---
+- hosts: control
+  tasks:
+    - name: display  single message
+      debug: msg="Hello Inderpal"
+
+    - name: display single message
+      debug:
+        msg: "How are you?"
+
+    - name: display multiple messages
+      debug:
+        msg: 
+          - "We become what we eat."
+          - "We become what we think."
+          - "Always do good, think good and say good :)"

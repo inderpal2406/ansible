@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+    - name: copy info.txt file to remote servers 
+      copy: src=./info.txt dest=/tmp/ 
+
+    - name: create empty file /tmp/name.txt
+      file: path=/tmp/name.txt state=touch

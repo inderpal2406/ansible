@@ -1,0 +1,52 @@
+---
+- name: This is play 1
+  hosts: control
+  gather_facts: false
+  become: true
+  vars:
+    x: 33
+    y: 44
+    a: 55
+    b: 66
+    float_num: 44.44
+    name: "Inderpal Singh"
+    name_2: Omkar Solaskar
+    bool_val_1: true
+    bool_val_2: no
+    bool_val_3: False
+    bool_val_4: Yes
+    diff_bool: "true"
+  tasks:
+    - name: display custom variable
+      debug: var=x
+
+    - name: display multiple custom variable
+      debug: var=x,y
+
+    - name: display custom variable
+      debug: 
+        var: x
+
+    - name: display multiple custom variable (though this doesn't fail but vars are not displayed)
+      debug:
+        var:
+          - a
+          - b
+
+    - name: display multiple custom variable
+      debug:
+        msg:
+          - "The value of variable float_num is : {{ float_num }}"
+          - "The value of variable name is : {{ name }}"
+          - "The value of variable bool_val_1 is : {{ bool_val_1 }}"
+
+    - name: display custom variable and their type
+      debug:
+        msg:
+          - "The value of variable x is: {{ x }} and data type of x is: {{ x|type_debug }}"
+          - "The value of variable float_num is: {{ float_num }} and data type of float_num is: {{ float_num|type_debug }}"
+          - "The value of variable name is: {{ name }} and data type of name is: {{ name|type_debug }}"
+          - "The value of variable bool_val_1 is: {{ bool_val_1 }} and data type of bool_val_1 is: {{ bool_val_1|type_debug }}"
+          - "The value of variable bool_val_2 is: {{ bool_val_2 }} and data type of bool_val_2 is: {{ bool_val_2|type_debug }}"
+          - "The value of variable name_2 is: {{ name_2 }} and data type of name_2 is: {{ name_2|type_debug }}"
+          - "The value of variable diff_bool is: {{ diff_bool }} and data type of diff_bool is: {{ diff_bool|type_debug }}"

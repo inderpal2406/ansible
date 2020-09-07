@@ -1,0 +1,55 @@
+---
+- hosts: control
+  gather_facts: false
+  vars:
+    x: 3
+    packages: ['vim','apache 2','git']
+    flowers: ["lotus","rose","lily"]
+    fruits: [mango,apple,banana]
+    places:
+      - 'London'
+      - 'Mumbai'
+      - 'New York'
+    web_servers: {'Linux': 'httpd', 'Ubuntu': 'apache2'}
+    tastes:
+      'apple': 'sweet'
+      'orange': 'sour'
+      'chilli': 'spicy'
+      'salt': 'salt'
+
+  tasks:
+    - name: display scalar variable
+      debug: var=x
+
+    - name: display list/sequence data structure variable
+      debug: var=packages
+
+    - name: display multiple list/sequence data structure variable
+      debug:
+        msg:
+          #- {{ flowers }}   # this gives error as "Always quote template expression brackets when they start a value
+          - "{{ flowers }}"
+          - "{{ fruits }}"
+          - "The value of data structure variable places is: {{ places }}"
+
+    - name: display map/dictionary variable (In ansible we call it as map var)
+      debug: var=web_servers
+
+    - name: display multiple map variables
+      debug:
+        msg:
+          - "{{ web_servers }}"
+          - "{{ tastes }}"
+          - "The value of map variable tastes is: {{ tastes }}"
+
+    - name: display only selected values from list/sequesnce var
+      debug: var=packages[0]
+
+    - name: display only keys from map variable
+      debug: var=tastes.keys()
+
+    - name: display only specific key value from map variable
+      debug: var=web_servers['Linux']
+
+    - name: display only specific key value from map variable
+      debug: var=tastes.get('orange')

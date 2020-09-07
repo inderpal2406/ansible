@@ -1,0 +1,6 @@
+---
+- hosts: all
+  tasks:
+    - name: display variable in message
+      debug: msg="The host is {{ inventory_hostname }}."
+

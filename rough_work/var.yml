@@ -1,0 +1,11 @@
+---
+- hosts: control
+  tasks:
+    - name: display variable
+      debug: 
+        var: inventory_hostname
+
+- hosts: webserver
+  tasks:
+    - name: display variable
+      debug: var=inventory_hostname

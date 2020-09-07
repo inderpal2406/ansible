@@ -1,0 +1,9 @@
+---
+- hosts: control
+  tasks:
+    - name: default verbosity is 0 if we don't specify
+      debug: msg="This message will be always displayed" 
+
+    - name: verbosity is 2
+      debug: msg="This message will be only displayed when we execute playbook with -vv option or more than 2 v, but not with 1 v or no v"
+             verbosity=2
