@@ -1,0 +1,35 @@
+---
+- hosts: control
+  gather_facts: false
+  tasks:
+    - name: check bash version
+      shell: bash --version
+      register: bash_version
+
+    - name: display bash version
+      debug: var=bash_version
+
+    - name: display bash version stdout using stdout as the key
+      debug: var=bash_version.stdout
+
+    - name: display bash version stdout alternate way
+      debug: var=bash_version['stdout']
+
+    - name: display bash version stdout alternate way
+      debug: var=bash_version.get('stdout')
+
+    - name: display bash version stdout with each line split separately which is same as stdout_lines
+      debug: var=bash_version.stdout.split('\n')
+
+    - name: display bash version stdout with each line split separately and only the first line
+      debug: var=bash_version.stdout.split('\n')[0]
+
+    - name: display bash version stdout with each line split separately and only the first line
+      debug: var=bash_version.stdout.split('\n')[0].split()[3]
+
+    - name: store bash version value in a variable
+      set_fact: 
+        bash_ver: "{{ bash_version.stdout.split('\n')[0].split()[3] }}"
+
+    - name: display bash version
+      debug: var=bash_ver

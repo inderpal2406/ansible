@@ -1,0 +1,14 @@
+---
+  x: 11
+  y: 22
+  z: 33.44
+  name: "Inderpal Singh"
+  bool_val: false
+  fruits:
+    - apple
+    - mango
+    - banana
+  capitals:
+    "India": "New Delhi"
+    "China": "Beijing"
+    "Pakistan": "Islamabad"

@@ -1,0 +1,15 @@
+---
+- hosts: control
+  gather_facts: false
+  vars_prompt:
+    - name: num1
+      prompt: "Enter value of num1"
+    - name: num2
+      prompt: "Enter value of num2"
+      private: false
+  tasks:
+    - name: display variable values
+      debug:
+        msg:
+          - "num1 : {{ num1 }}"
+          - "num2 : {{ num2 }}"

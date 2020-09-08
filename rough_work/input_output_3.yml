@@ -1,0 +1,12 @@
+---
+- hosts: control
+  gather_facts: false
+  vars_prompt:
+    - name: username
+      prompt: "Enter your username"
+      private: false
+    - name: password
+      prompt: "Enter your password"
+  tasks:
+    - name: display message
+      debug: msg="Welcome {{ username }}, your password is safely stored."

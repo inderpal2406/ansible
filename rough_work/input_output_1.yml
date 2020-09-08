@@ -1,0 +1,19 @@
+---
+# This playbook shows how we can use var_prompt for one single variable
+- hosts: control
+  gather_facts: false
+  vars:
+    x: 1
+    y: 2
+    name: "Inderpal"
+  vars_prompt:
+    name: city
+    prompt: "Enter value of city : "
+  tasks:
+    - name: display variables' values
+      debug:
+        msg:
+          - "x = {{ x }}"
+          - "y = {{ y }}"
+          - "name = {{ name }}"
+          - "city = {{ city }}"

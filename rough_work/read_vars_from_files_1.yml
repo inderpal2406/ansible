@@ -1,0 +1,17 @@
+---
+- hosts: control
+  gather_facts: no
+  vars_files: variables.yml
+  tasks:
+    - name: display variables
+      debug:
+        msg:
+          - "x : {{ x }}"
+          - "y : {{ y }}"
+          - "z : {{ z }}"
+          - "My name is {{ name }}"
+          - "The boolean value is {{ bool_val }}"
+          - "The different fruits available are {{ fruits }}"
+
+    - name: display variable
+      debug: var=capitals

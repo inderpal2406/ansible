@@ -1,0 +1,9 @@
+{
+  "a": 34,
+  "b": 45,
+  "c": 34.45,
+  "first_name": "Inderpal Singh",
+  "boolean_value": false,
+  "num_list": [1,2,3,4,5],
+  "tastes": {'orange': 'sour', 'apple': 'sweet', 'chilli': 'spicy'},
+  }

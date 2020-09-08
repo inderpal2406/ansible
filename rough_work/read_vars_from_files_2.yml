@@ -1,0 +1,18 @@
+---
+- hosts: control
+  gather_facts: no
+  vars_files:
+    - variables.yml
+    - variables.json
+  tasks:
+    - name: display variables
+      debug:
+        msg:
+          - "{{ a }}"
+          - "{{ b }}"
+          - "{{ c }}"
+          - "{{ first_name }}"
+          - "{{ boolean_value }}"
+          - "{{ num_list }}"
+          - "{{ tastes }}"
+
