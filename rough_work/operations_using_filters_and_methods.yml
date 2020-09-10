@@ -1,0 +1,29 @@
+---
+- hosts: control
+  gather_facts: no
+  vars:
+    sentence: "HeLLo! WelCome TO thIS beaUtiFul World!"
+    x: "77"
+    z: [77,43,2,99,51,19]
+  tasks:
+    - name: perform variable operation
+      debug: var=sentence|lower
+
+    - name: perform variable operation
+      debug: var=sentence.upper() 
+    
+    - name: perform multiple variable operations
+      debug:
+        msg:
+          - "{{ sentence|lower }}"
+          - "{{ sentence|upper }}"
+          - "{{ sentence|title }}"
+          - "{{ sentence.lower() }}"
+          - "{{ sentence.upper() }}"
+          - "{{ sentence.title() }}"
+          - "{{ x|int }}"
+          - "{{ x|int|type_debug }}"
+          - "The greatest in z list is {{ z|max }}"
+          - "The smallest in z list id {{ z|min }}"
+          - "{{ z|max }}"
+          - "{{ z|min }}"

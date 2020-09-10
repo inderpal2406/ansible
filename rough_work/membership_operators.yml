@@ -1,0 +1,27 @@
+---
+- hosts: control
+  gather_facts: no
+  vars:
+    x: [1,2,3,4,5]
+    y: 2
+    z: 9
+  tasks:
+    - name: perform membership operations
+      debug: 
+        msg:
+          - "x : {{ x }}"
+          - "y : {{ y }}"
+          - "z : {{ z }}"
+          - "y is member of x : {{ y in x }}"
+          - "z is member of x : {{ z in x }}"
+          - "6 is member of x : {{ 6 in x }}"
+
+    - name: perform membership operations
+      debug:
+        msg:
+          - "x : {{ x }}"
+          - "y : {{ y }}"
+          - "z : {{ z }}"
+          - "y is not member of x : {{ y not in x }}"
+          - "z is not member of x : {{ z not in x }}"
+          - "99 is not member of x : {{ 99 not in x }}"
