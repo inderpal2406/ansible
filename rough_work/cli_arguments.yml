@@ -1,0 +1,9 @@
+---
+# This playbook can be executed using below 2 commands (for example)
+# ansible-playbook cli_arguments.yml -e "pkg=apache2 state=present"
+# ansible-playbook cli_arguments.yml -e "pkg=apache2 state=absent"
+- hosts: control
+  become: yes
+  tasks:
+    - name: install package
+      apt: name={{ pkg }} state={{ pkg_state }}

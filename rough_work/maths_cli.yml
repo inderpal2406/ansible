@@ -1,0 +1,8 @@
+---
+# This playbook can be executed using below command
+# ansible-playbook maths_cli.yml -e "x=2 y=3"
+- hosts: control
+  gather_facts: no
+  tasks:
+    - name: add cli arguments
+      debug: msg="The sum of {{ x }} and {{ y }} is = {{ x+y }}"

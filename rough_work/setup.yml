@@ -1,0 +1,9 @@
+---
+- hosts: control
+  tasks:
+    - name: gather facts and store them in variable
+      setup:
+      register: output
+
+    - name: display gathered facts
+      debug: var=output

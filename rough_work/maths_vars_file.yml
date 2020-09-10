@@ -1,0 +1,11 @@
+---
+- hosts: control
+  gather_facts: no
+  vars_files:
+    - ./my_vars.yml
+  tasks:
+    - name: display output
+      debug: 
+        msg:
+          - "The value os first variable is : {{ x }} and its data type is {{ x|type_debug }}"
+          - "Sum of two variables {{ x }} and {{ y }} is : {{ x+y }}"

@@ -1,0 +1,13 @@
+---
+- hosts: control
+  gather_facts: no
+  vars_prompt:
+    - name: int1
+      prompt: "Enter first integer"
+      private: no
+    - name: int2
+      prompt: "Enter second integer"
+      private: no
+  tasks:
+    - name: display output
+      debug: msg="The sum is {{ int1|int + int2|int }}"

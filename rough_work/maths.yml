@@ -1,0 +1,15 @@
+---
+- hosts: control
+  gather_facts: no
+  vars:
+    x: 2
+    y: 3
+  tasks:
+    - name: perform arithmetic operations
+      debug:
+        msg:
+          - "{{ x }} + {{ y }} = {{ x+y }}"
+          - "{{ x }} - {{ y }} = {{ x-y }}"
+          - "{{ x }} * {{ y }} = {{ x*y }}"
+          - "{{ x }} / {{ y }} = {{ x/y }}"
+          - "{{ x }} % {{ y }} = {{ x%y }}"
