@@ -1,0 +1,30 @@
+---
+
+####################################################################################################
+# If we want to test that all conditions are true, then we can use and operator.
+# If we want to test that all conditions are false, then we can use or operator.
+# If we want to test that if one condition is true, then we can use or operator.
+# If we want to test that if one condition is false, then we can use and operator and negate it.
+# ##################################################################################################
+
+- hosts: control
+  gather_facts: no
+  vars:
+    x: 1
+    y: 2
+    z: [1,2,3,4,5]
+  tasks:
+    - name: perform logical operations
+      debug:
+        msg:
+          - "Value of x : {{ x }}"
+          - "Value of y : {{ y }}"
+          - "Value of z : {{ z }}"
+          - "Is x greater than y and x is in z : {{ (x>y) and (x in z) }}"  # parenthesis is not necessary
+          - "Is y greater than x and y is in z : {{ (y>x) and (y in z) }}"
+          - "Is x equal to 1 and x is even and x is lesser than y : {{ (x==1) and (x is even) and (x<y) }}"
+          - "Is x equal to 1 and x is odd and x is lesser than y : {{ (x==1) and (x is odd) and (x<y) }}"
+          - "Is y equal to 2 or y is odd or y is not in z : {{ (y==2) or (y is odd) or (y not in z) }}"
+          - "Is y not equal to 2 or y is odd or y is not in z : {{ (y!=2) or (y is odd) or (y not in z) }}"
+          - "Use of not operator is to reverse the output of condition evaluation as below,"
+          - "Negation of x lesser than y : {{ not(x<y) }}"

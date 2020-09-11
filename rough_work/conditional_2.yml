@@ -1,0 +1,12 @@
+---
+- hosts: control
+  become: true
+  tasks:
+    - name: install httpd if it's Redhat/CentOS/Amazon Linux
+      yum: name=httpd state=present update_cache=yes
+      when: (ansible_distribution=="Redhat") or (ansible_distribution=="CentOS") or (ansible_distribution=="Amazon")
+      # above when condition can also be (ansible_distribution!="Ubuntu")
+
+    - name: install apache2 if it's Ubuntu
+      apt: name=apache2 state=present update_cache=yes
+      when: ansible_distribution=="Ubuntu"

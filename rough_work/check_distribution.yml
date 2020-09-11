@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+    - name: display hostname and distribution
+      debug: msg="The hostname is {{ inventory_hostname }} and its distribution is {{ ansible_distribution }}"

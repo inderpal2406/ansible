@@ -1,0 +1,24 @@
+---
+- hosts: control
+  gather_facts: no
+  vars_prompt:
+    - name: num1
+      prompt: "Enter first number num1"
+      private: no
+
+    - name: num2
+      prompt: "Enter second number num2"
+      private: no
+
+  tasks:
+    - name: display message only if num1 > num2
+      debug: msg="Value of num1 is greater than num2"
+      when: num1>num2
+
+    - name: display message only if num1==num2
+      debug: msg="The value of num1 and num2 is same"
+      when: num1==num2
+
+    - name: display message only if num1 < num2
+      debug: msg="Value of num1 is lesser than num2"
+      when: num1<num2
