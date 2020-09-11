@@ -1,0 +1,12 @@
+---
+- hosts: control
+  gather_facts: no
+  tasks:
+    - name: display names of people
+      debug: msg="The name of the person is {{item}}"
+      loop:
+        - "Sagar"
+        - "Gopal"
+        - "Vicky"
+        - "Vikram"
+        - "Sachin"

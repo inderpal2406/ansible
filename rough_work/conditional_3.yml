@@ -1,0 +1,26 @@
+---
+# In line condition
+
+- hosts: control
+  gather_facts: no
+  vars:
+    x: 11
+    y: 22
+  tasks:
+    - name: check if {{ x }} is greater than {{ y }}
+      debug: msg="The largest amongst {{ x }} and {{ y }} is = {{ x }}"
+      when: x>y
+
+    - name: check if {{ y }} is greater than {{ x }}
+      debug: msg="The largest amongst {{ x }} and {{ y }} is = {{ y }}"
+      when: y>x
+
+    # above code in one line
+    - name: check largest amongst {{ x }} and {{ y }} using inline condition
+      debug: msg="The largest amongst {{ x }} and {{ y }} is = {{ x if (x>y) else y }}"
+
+    # one line condition statements output can be assigned to variable
+    - name: check largest amongst {{ x }} and {{ y }} using inline condition and variable
+      vars:
+        largest: "{{ x if (x>y) else y }}"      # this variable can be at global level as well
+      debug: msg="The largest amongst {{ x }} and {{ y }} is = {{ largest }}"

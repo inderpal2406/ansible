@@ -1,0 +1,58 @@
+---
+# We can run only specific tasks with help of tags while executing the complete playbook
+# ansible-playbook tags_1.yml --list-tags
+# ansible-playbook tags_1.yml --tags first
+# ansible-playbook tags_1.yml --tags first,third
+# ansible-playbook tags_1.yml -t fifth
+# ansible-playbook tags_1.yml --skip-tags first
+# ansible-playbook tags_1.yml --skip-tags first,second
+
+- hosts: control
+  gather_facts: no
+  tasks:
+    - name: first task
+      debug: msg="This is first task"
+      tags: first
+
+    - name: second task
+      debug: msg="This is second task"
+      tags: second
+
+    - name: third task
+      debug: msg="This is third task"
+      tags: third
+
+    - name: fourth task
+      debug: msg="This is fourth task"
+      tags: fourth
+
+    - name: fifth task
+      debug: msg="This is fifth task"
+      tags: fifth
+
+    - name: copy of first task
+      debug: msg="This is copy of first task"
+      tags: first
+
+    - name: second copy of first task
+      debug: msg="This is second copy of first task"
+      tags: first
+
+    # Sometimes amongst the tasks having same tags, we need to execute only specific tasks and not all
+    # Then in such case, each task should have different tags, and a common tag as well
+    # So, when we need to execute specific task, then we can specify tag for individual tasks
+    # And when we need to execute both tasks together, then we can use the common tag
+    # ansible-playbook tags_1.yml --tags sixth
+    # ansible-playbook tags_1.yml --tags seventh
+    # ansible-playbook tags_1.yml --tags common
+    - name: sixth task
+      debug: msg="This is sixth task"
+      tags:
+        - sixth
+        - common
+
+    - name: seventh task
+      debug: msg="This is seventh task"
+      tags:
+        - seventh
+        - common

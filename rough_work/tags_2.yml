@@ -1,0 +1,36 @@
+---
+# never tag has default meaning which is ansible will never execute tasks with such tag unless otherwise specified with another tag
+# ansible-playbook tags_2.yml --tags first
+# ansible-playbook tags_2.yml --tags common
+# ansible-playbook tags_2.yml
+# always tag will run everytime by default even if we don't specify any tag
+# we cannot give never and always tag to same task
+# also for other tags in task with never tag, the other tags won't be displayed in o/p of ansible-playbook --list-tags
+
+- hosts: control
+  gather_facts: no
+  tasks:
+    - name: first task
+      debug: msg="this is first task"
+      tags:
+        - first
+        - common
+        - never
+
+    - name: second task
+      debug: msg="this is second task"
+      tags:
+        - second
+        - common
+        - never
+
+    - name: third task
+      debug: msg="this is third task"
+      tags:
+        - third
+        - never
+
+    - name: fourth task
+      debug: msg="this is fourth task"
+      tags:
+        - always
