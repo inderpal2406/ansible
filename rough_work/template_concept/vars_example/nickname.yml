@@ -1,0 +1,8 @@
+---
+- hosts: webserver
+  gather_facts: no
+  vars:
+    nickname: "Inder"
+  tasks:
+    - name: copy template file and replace variables
+      template: src=testfile.txt.j2 dest=/tmp/testfile.txt
