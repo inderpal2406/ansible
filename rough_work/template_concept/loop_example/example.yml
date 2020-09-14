@@ -1,0 +1,11 @@
+---
+- hosts: webserver
+  gather_facts: no
+  vars:
+    x:          # or x: [1,2,3]
+      - 1
+      - 2
+      - 3
+  tasks:
+    - name: copy template file for loop construct
+      template: src=testfile_for_loop.txt.j2 dest=/tmp/testfile_for_loop.txt

@@ -1,0 +1,15 @@
+---
+- hosts: webserver
+  gather_facts: no
+  vars:
+    x: 22
+    y: 11
+  tasks:
+    - name: copy template file for if condition
+      template: src=testfile_1.txt.j2 dest=/tmp/testfile_1.txt
+
+    - name: copy template file for if-else condition
+      template: src=testfile_2.txt.j2 dest=/tmp/testfile_2.txt
+
+    - name: copy template file for if-elif-else condition
+      template: src=testfile_3.txt.j2 dest=/tmp/testfile_3.txt
