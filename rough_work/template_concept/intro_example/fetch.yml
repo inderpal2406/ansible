@@ -1,0 +1,7 @@
+---
+- hosts: webserver
+  gather_facts: no
+  become: yes
+  tasks:
+    - name: fetch index.html file
+      fetch: src=/usr/share/httpd/noindex/index.html dest=template/index.html.j2 flat=yes
