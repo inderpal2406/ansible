@@ -1,0 +1,5 @@
+---
+# tasks file for tomcat_java
+
+- name: install java
+  yum: name={{ java_version }} state=present update_cache=yes

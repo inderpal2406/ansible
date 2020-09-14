@@ -1,0 +1,8 @@
+---
+- name: install and configure tomcat on webserver group
+  hosts: webserver
+  gather_facts: false
+  become: true
+  roles:
+    - tomcat_java
+    - tomcat_tomcat

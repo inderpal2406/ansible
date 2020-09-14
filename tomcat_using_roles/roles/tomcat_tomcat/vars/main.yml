@@ -1,0 +1,6 @@
+---
+# vars file for tomcat_tomcat
+
+tomcat_port: 6060
+tomcat_version: "9.0.37"
+tomcat_url: "https://mirrors.estointernet.in/apache/tomcat/tomcat-{{ tomcat_version.split('.')[0] }}/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"

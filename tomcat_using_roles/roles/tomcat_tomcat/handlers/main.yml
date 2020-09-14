@@ -1,0 +1,10 @@
+---
+# handlers file for tomcat_tomcat
+
+  - name: stop tomcat
+    command: /opt/apache-tomcat-{{ tomcat_version }}/bin/shutdown.sh
+    ignore_errors: yes
+
+  - name: start tomcat
+    command: nohup /opt/apache-tomcat-{{ tomcat_version }}/bin/startup.sh
+
