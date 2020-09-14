@@ -1,0 +1,27 @@
+---
+- hosts: all
+  tasks:
+    - name: check uptime
+      command: uptime
+      register: uptime
+
+    - name: remove old inventory.csv file
+      file: path=./inventory.csv state=absent
+      delegate_to: localhost # if we mention control, it fails saying no host found with name control, so we need to menion hostname
+      run_once: true
+
+    - name: create new inventory.csv file with header
+      copy: dest=./inventory.csv 
+            content="Hostname,OS Family,OS,OS Distribution,OS Distribution Version,OS Distribution Release,Uptime\n"
+      delegate_to: localhost # we can mention hostname which is resolvable
+      run_once: true
+
+    - name: populate inventory.csv
+      lineinfile: path=./inventory.csv
+                  line="{{ inventory_hostname }},{{ ansible_os_family }},{{ ansible_system }},{{ ansible_distribution }},{{ ansible_distribution_version }},{{ ansible_distribution_release }},{{ uptime.stdout.split(',')[0].split('up')[-1].split()[-1] }}"
+      delegate_to: localhost # we can mention hostname of any other host where we want to execute this task
+
+# delegate_to vs local_action
+# local_action is older way
+# local_action will always execute task on localhost
+# delegate_to will run on localhost or any other host as we specify

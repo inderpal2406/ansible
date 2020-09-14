@@ -1,0 +1,16 @@
+---
+# rescue is part of block
+# different blocks will have respective rescue blocks if needed
+# rescue block will get executed only if any task under corresponding block will fail
+# rescue block won't be executed if corresponding block tasks get completed successfully
+
+- hosts: control
+  gather_facts: no
+  tasks:
+    - block:
+        - name: check /tmpp contents
+          command: ls -l /tmpp
+          register: tmpp_output
+
+      rescue:
+        - debug: msg="The path /tmpp doesn't exist."

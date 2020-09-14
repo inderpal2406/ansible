@@ -1,0 +1,19 @@
+---
+# comparing import_tasks and include_tasks
+# import_tasks is a static import
+# include_tasks is a dynamic import
+# import_tasks get imported when we call the playbook from command line using ansible-playbook command
+# include_tasks get imported during execution of playbook, at the moment when include_tasks step is hit in execution flow
+# so, any variables or data generated during play execution can't be used in import_tasks
+# while, such variables can be used in include_tasks
+# in below example, ansible_os_family variable is generated in gather_facts step during play execution 
+# and won't have a pre-defined value
+# so, include_tasks need to be used in below example, as import_tasks fail
+# if we use import_tasks, then the variable should be pre-defined under vars/vars files or in extra vars passed at CLI
+
+- hosts: control
+  become: true
+  tasks:
+    #- import_tasks: install_web_{{ ansible_os_family }}.yml   # commenting this as it'll fail
+    - include_tasks: install_web_{{ ansible_os_family }}.yml
+    - include_tasks: install_java_{{ ansible_os_family }}.yml

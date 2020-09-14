@@ -1,0 +1,3 @@
+---
+- name: install httpd on redhat family
+  yum: name=httpd state=present update_cache=yes

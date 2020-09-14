@@ -1,0 +1,28 @@
+---
+# block helps us to club tasks which have common parameters like become, when, ignore_errors, etc
+- hosts: control
+  gather_facts: no
+  tasks:
+    - block:
+        - name: check /home contents
+          command: ls -l /home
+          register: home_output
+
+        - name: check /tmp contents
+          command: ls -l /tmp
+          register: tmp_output
+
+        - name: check /etc contents
+          command: ls -l /etc
+          register: etc_output
+
+      ignore_errors: yes
+
+    - name: display /home contents
+      debug: var=home_output
+
+    - name: display /tmp contents
+      debug: var=tmp_contents
+
+    - name: display /etc contents
+      debug: var=etc_output

@@ -1,0 +1,23 @@
+---
+# this is how original playbook will look like while installing web component and java
+
+- hosts: control  # ideally it would be webservers
+  become: true
+  tasks:
+    - block: 
+        - name: install httpd on RedHat family
+          yum: name=httpd state=present update_cache=yes
+
+        - name: install java on RedHat family
+          yum: name=java-1.8.0-openjdk state=present update_cache=yes
+
+      when: ansible_os_family=="RedHat"
+
+    - block:
+        - name: install apache2 on Debian family
+          apt: name=apache2 state=present update_cache=yes
+
+        - name: install java on Debian family
+          apt: name=openjdk-8-jdk state=present update_cache=yes
+
+      when: ansible_os_family=="Debian"

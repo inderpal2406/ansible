@@ -1,0 +1,3 @@
+---
+- name: install java on redhat family
+  yum: name=java-1.8.0-openjdk state=present update_cache=yes

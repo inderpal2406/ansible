@@ -1,0 +1,6 @@
+---
+- hosts: control
+  tasks:
+    #- import_vars: vars_{{ ansible_os_family }}.yml  # this will fail as ansible_os_family is a dynamic var generated everytime playbook runs
+    - include_vars: vars_{{ ansible_os_family }}.yml
+    - debug: msg="The web component package is {{ pkg }}"

@@ -1,0 +1,22 @@
+---
+# always block comes with block-rescue-always
+# it is like try-except-finally block in python
+# rescue block will be executed only if an error occurs in block (try)
+# always block will always be executed irrespective of the fact if block (try) succeedes or fails
+# however, both rescue and always blocks are optional to be used with block
+
+- hosts: control
+  gather_facts: no
+  tasks:
+    - block:
+        - name: check /etcc contents
+          command: ls -l /etcc
+          register: etcc_output
+
+      rescue:
+        - name: display message
+          debug: msg="The path /etcc doesn't exist"
+
+      always:
+        - name: display message
+          debug: msg="This task will always be executed"

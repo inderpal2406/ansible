@@ -1,0 +1,36 @@
+#Sample hosts examples with hostnames
+#[loadbalancer]
+#lb01
+#
+#[webserver]
+#app01
+#app02
+#
+#[database]
+#db01
+#
+#[control]
+#control
+
+#Ungrouped hosts
+#
+#Ubuntu-AppServer-01 172.31.47.68
+#Ubuntu-AppServer-02 172.31.37.198
+#Ubuntu-Controller 172.31.45.130
+#Ubuntu-DBServer 172.31.32.28
+#Ubuntu-Nginx-LoadBalancer 172.31.35.243
+
+#Real inventory begins here
+[loadbalancer]
+lb01	#ip-172-31-35-243 #172.31.35.243
+
+[webserver]
+app01	#ip-172-31-47-68 #172.31.47.68
+app02	#ip-172-31-37-198 # 172.31.37.198
+
+[database]
+db01	#ip-172-31-32-28 #172.31.32.28
+
+[control]
+ansible-controller ansible_connection=local # 172.31.45.130
+

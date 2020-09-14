@@ -1,0 +1,27 @@
+---
+# when we don't want to stop playbook execution if a task fails, then we need to use error handling
+
+- hosts: control
+  gather_facts: no
+  tasks:
+    - name: check /home contents
+      shell: ls -l /home
+      register: home_output
+
+    - name: display /home contents
+      debug: var=home_output
+
+    - name: check /tmpp contents
+      shell: ls -l /tmpp
+      register: tmpp_output
+      ignore_errors: yes
+
+    - name: display /tmpp contents
+      debug: var=tmpp_output
+
+    - name: check /etc contents
+      shell: ls -l /etc
+      register: etc_output
+
+    - name: display /etc contents
+      debug: var=etc_output

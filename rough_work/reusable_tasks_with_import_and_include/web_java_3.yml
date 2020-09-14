@@ -1,0 +1,15 @@
+---
+# using include_tasks along with import_tasks in web_java_2.yml
+
+- hosts: control
+  become: true
+  tasks:
+    - block:
+        - import_tasks: install_web_RedHat.yml
+        - import_tasks: install_java_RedHat.yml
+      when: ansible_os_family=="RedHat"
+
+    - block:
+        - include_tasks: install_web_Debian.yml
+        - include_tasks: install_java_Debian.yml
+      when: ansible_os_family=="Debian"

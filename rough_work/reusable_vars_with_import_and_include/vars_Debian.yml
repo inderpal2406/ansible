@@ -1,0 +1,5 @@
+---
+# if we describe tasks here, then we need -
+# if we describe vars here, then we do not need -
+
+  pkg: apache2

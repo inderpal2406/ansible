@@ -1,0 +1,6 @@
+Hostname,OS Family,OS,OS Distribution,OS Distribution Version,OS Distribution Release,Uptime
+lb01,Debian,Linux,Ubuntu,18.04,bionic,3:05
+db01,Debian,Linux,Ubuntu,18.04,bionic,3:05
+app02,Debian,Linux,Ubuntu,18.04,bionic,3:05
+app01,Debian,Linux,Ubuntu,18.04,bionic,3:05
+ansible-controller,Debian,Linux,Ubuntu,18.04,bionic,12:15

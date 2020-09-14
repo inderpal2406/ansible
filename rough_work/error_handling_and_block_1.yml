@@ -1,0 +1,27 @@
+---
+- hosts: control
+  gather_facts: no
+  tasks:
+    - name: check /home contents
+      command: ls -l /home
+      register: home_output
+      ignore_errors: yes
+
+    - name: display /home contents
+      debug: var=home_output
+
+    - name: check /tmp contents
+      command: ls -l /tmp
+      register: tmp_output
+      ignore_errors: yes
+
+    - name: display /tmp contents
+      debug: var=tmp_output
+
+    - name: check /etc contents
+      command: ls -l /etc
+      register: etc_output
+      ignore_errors: yes
+
+    - name: display /etc contents
+      debug: var=etc_output

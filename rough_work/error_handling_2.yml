@@ -1,0 +1,14 @@
+---
+# Here, we'll purposely fail our task based on return code
+# using failed_when helps us to avoid writing an extra task like in error_handling_3.yml
+
+- hosts: control
+  gather_facts: no
+  tasks:
+    - name: check /home contents
+      command: ls -l /home
+      register: home_output
+      failed_when: home_output.rc==0
+
+    - name: display /home contents
+      debug: var=home_output

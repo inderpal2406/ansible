@@ -1,0 +1,13 @@
+---
+- hosts: all
+  tasks:
+    - name: check uptime
+      command: uptime
+      register: uptime
+
+    - name: display information
+      debug:
+        msg:
+          - "{{ inventory_hostname }},{{ ansible_os_family }},{{ ansible_system }},{{ ansible_distribution }},\
+             {{ ansible_distribution_release }},{{ ansible_distribution_version }},\
+             {{ uptime.stdout.split(',')[0].split('up')[-1].split()[-1] }}"

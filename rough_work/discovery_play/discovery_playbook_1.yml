@@ -1,0 +1,15 @@
+---
+# This playbook is specific to only linux hosts
+
+- hosts: all
+  tasks:
+    - name: check os
+      command: uname
+      register: os
+
+    - name: check uptime
+      command: uptime
+      register: uptime
+
+    - name: display information
+      debug: msg="{{ inventory_hostname }} {{ os.stdout }} {{ uptime.stdout.split(',')[0].split('up')[1] }}"  # ('up')[-1] will also work
