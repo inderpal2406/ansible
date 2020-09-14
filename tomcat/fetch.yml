@@ -1,0 +1,10 @@
+---
+- hosts: webserver
+  gather_facts: no
+  become: yes
+  vars:
+    tomcat_version: "9.0.37"
+  tasks:
+    - name: fetch tomcat server.xml file
+      fetch: src="/opt/apache-tomcat-{{ tomcat_version }}/conf/server.xml" dest="template/"
+             flat=yes
