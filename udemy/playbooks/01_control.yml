@@ -31,6 +31,7 @@
           - curl
           - whois
           - python-httplib2
+          - zip
 
     handlers:
       - name: reboot server
